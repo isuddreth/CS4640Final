@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class HealthTest : MonoBehaviour
@@ -26,10 +25,10 @@ public class HealthTest : MonoBehaviour
         GameObject Player = GameObject.Find("Player");
         Detection detection = Player.GetComponent<Detection>();
 
-        if (detection.InReach == true)
+        if (detection.healthInReach == true)
         {
             GUI.color = Color.white;
-            GUI.Box(new Rect(20, 20, 200, 25), "Health Test Cube");
+            GUI.Box(new Rect(20, 40, 200, 25), "Health Test Cube");
         }
     }
 }

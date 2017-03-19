@@ -6,10 +6,16 @@ using UnityEngine;
 public class Detection : MonoBehaviour
 {
     public PlayerHealth health;
+    public PlayerFood playerFood;
+    public CastleFood castleFood;
+
 
     public float Reach = 4.0F;
     [HideInInspector]
-    public bool InReach;
+    public bool healthInReach;
+    public bool throneInReach;
+    public bool playerFoodoodInReach;
+    public bool castleFoodInReach;
 
     public Color DebugRayColor = Color.green;
     [Range(0.0F, 1.0F)]
@@ -31,21 +37,77 @@ public class Detection : MonoBehaviour
         //Cast ray from center of the screen towards where the player is looking.
         if (Physics.Raycast(ray, out hit, Reach))
         {
-
+            // if on test health cube
             if (hit.collider.tag == "HealthTest")
             {
-                InReach = true;
+                healthInReach = true;
+                throneInReach = false;
+                playerFoodoodInReach = false;
+                castleFoodInReach = false;
 
                 if (Input.GetKey(KeyCode.E))
                 {
-                    health.TakeDamage(1);
+                    health.TakeDamage(.5f);
                 }
             }
 
-            else InReach = false;
+            // if on test health cube
+            else if (hit.collider.tag == "Throne")
+            {
+                healthInReach = false;
+                throneInReach = true;
+                playerFoodoodInReach = false;
+                castleFoodInReach = false;
+
+                if (Input.GetKey(KeyCode.E))
+                {
+                }
+            }
+
+            // if on test health cube
+            else if (hit.collider.tag == "PlayerFoodTest")
+            {
+                healthInReach = false;
+                throneInReach = false;
+                playerFoodoodInReach = true;
+                castleFoodInReach = false;
+
+                if (Input.GetKey(KeyCode.E))
+                {
+                    playerFood.AddFood(.5f);
+                }
+            }
+
+            // if on test health cube
+            else if (hit.collider.tag == "CastleFoodTest")
+            {
+                healthInReach = false;
+                throneInReach = false;
+                playerFoodoodInReach = false;
+                castleFoodInReach = true;
+
+                if (Input.GetKey(KeyCode.E))
+                {
+                    castleFood.AddFood(.5f);
+                }
+            }
+
+            else
+            {
+                healthInReach = false;
+                throneInReach = false;
+                playerFoodoodInReach = false;
+                castleFoodInReach = false;
+            }
         }
 
-        else InReach = false;
+        else
+        {
+            healthInReach = false;
+            throneInReach = false;
+            playerFoodoodInReach = false;
+            castleFoodInReach = false;
+        }
 
         //Draw the ray as a colored line for debugging purposes.
         Debug.DrawRay(ray.origin, ray.direction * Reach, DebugRayColor);

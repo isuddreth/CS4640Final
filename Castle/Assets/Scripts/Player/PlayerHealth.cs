@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int startingHealth = 100;
-    public int currentHealth;
+    public float startingHealth = 100;
+    public float currentHealth;
     public Slider healthSlider;
+    public Text healthText;
     public Image damageImage;
     public AudioClip deathClip;
     public float flashSpeed = 5f;
@@ -17,8 +18,8 @@ public class PlayerHealth : MonoBehaviour
 
     Animator anim;
     AudioSource playerAudio;
-    PlayerMovement playerMovement;
-    PlayerShooting playerShooting;
+    //PlayerMovement playerMovement;
+    //PlayerShooting playerShooting;
     bool isDead;
     bool damaged;
 
@@ -27,8 +28,8 @@ public class PlayerHealth : MonoBehaviour
     {
         anim = GetComponent <Animator> ();
         playerAudio = GetComponent <AudioSource> ();
-        playerMovement = GetComponent <PlayerMovement> ();
-        playerShooting = GetComponentInChildren <PlayerShooting> ();
+        //playerMovement = GetComponent <PlayerMovement> ();
+        //playerShooting = GetComponentInChildren <PlayerShooting> ();
         currentHealth = startingHealth;
     }
 
@@ -47,13 +48,16 @@ public class PlayerHealth : MonoBehaviour
     }
 
 
-    public void TakeDamage (int amount)
+    public void TakeDamage (float amount)
     {
         damaged = true;
 
         currentHealth -= amount;
 
         healthSlider.value = currentHealth;
+
+        //{0:#.00} to display deciamls
+        healthText.text = string.Format("{0:#} / 100", currentHealth);
 
         //playerAudio.Play ();
 
@@ -68,15 +72,15 @@ public class PlayerHealth : MonoBehaviour
     {
         isDead = true;
 
-        playerShooting.DisableEffects ();
+        //playerShooting.DisableEffects ();
 
         anim.SetTrigger ("Die");
 
         playerAudio.clip = deathClip;
         playerAudio.Play ();
 
-        playerMovement.enabled = false;
-        playerShooting.enabled = false;
+        //playerMovement.enabled = false;
+        //playerShooting.enabled = false;
     }
 
 
