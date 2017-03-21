@@ -34,31 +34,45 @@ public class FoodManager : MonoBehaviour
         //playerShooting = GetComponentInChildren <PlayerShooting> ();
         currentPlayerFood = startingPlayerFood;
         currentCastleFood = startingCastleFood;
+
+        castleFoodText.text = string.Format("{0:#0} / {1}", currentCastleFood, castleCapacity);
+        playerFoodText.text = string.Format("{0:#0} / {1}", currentPlayerFood, playerCapacity);
+        playerFoodSlider.maxValue = playerCapacity;
+        castleFoodSlider.maxValue = castleCapacity;
+
     }
 
 
     void Update()
     {
 
+        if (currentPlayerFood == 0)
+        {
+            playerHealth.TakeDamage(.001f);
+        }
+
     }
 
 
     public void AddPlayerFood(float amount)
     {
+        if (currentPlayerFood + amount > playerCapacity)
+            return;
+
         currentPlayerFood += amount;
 
         playerFoodSlider.value = currentPlayerFood;
 
         //{0:#.00} to display deciamls
-        playerFoodText.text = string.Format("{0:#} / 100", currentPlayerFood);
+        playerFoodText.text = string.Format("{0:#0} / {1}", currentPlayerFood, playerCapacity);
 
         //playerAudio.Play ();
-        
+
     }
 
     public void AddCastleFood(float amount)
     {
-        if ((currentPlayerFood - amount) < 0)
+        if ((currentPlayerFood - amount) < 0 || currentCastleFood + amount > castleCapacity)
             return;
 
         AddPlayerFood(-amount);
@@ -67,11 +81,27 @@ public class FoodManager : MonoBehaviour
         castleFoodSlider.value = currentCastleFood;
 
         //{0:#.00} to display deciamls
-        castleFoodText.text = string.Format("{0:#} / {1}", currentCastleFood, castleCapacity);
+        castleFoodText.text = string.Format("{0:#0} / {1}", currentCastleFood, castleCapacity);
 
         //playerAudio.Play ();
-
-
+        
     }
+
+    public void RemoveCastleFood(float amount)
+    {
+        if (currentCastleFood - amount < 0)
+            return;
+
+        playerHealth.AddHealth(5f);
+        currentCastleFood -= amount;
+
+        castleFoodSlider.value = currentCastleFood;
+
+        //{0:#.00} to display deciamls
+        castleFoodText.text = string.Format("{0:#0} / {1}", currentCastleFood, castleCapacity);
+
+        //playerAudio.Play ();
+    }
+
 
 }

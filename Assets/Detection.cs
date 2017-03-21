@@ -15,6 +15,7 @@ public class Detection : MonoBehaviour
     public bool throneInReach;
     public bool playerFoodoodInReach;
     public bool castleFoodInReach;
+    public float timer;
 
     public Color DebugRayColor = Color.green;
     [Range(0.0F, 1.0F)]
@@ -58,8 +59,10 @@ public class Detection : MonoBehaviour
                 playerFoodoodInReach = false;
                 castleFoodInReach = false;
 
-                if (Input.GetKey(KeyCode.E))
+                if (Input.GetKey(KeyCode.E) && timer <= 0)
                 {
+                    timer = 0.5f;
+                    food.RemoveCastleFood(5f);
                 }
             }
 
@@ -110,6 +113,10 @@ public class Detection : MonoBehaviour
 
         //Draw the ray as a colored line for debugging purposes.
         Debug.DrawRay(ray.origin, ray.direction * Reach, DebugRayColor);
+
+        if (timer > 0)
+            timer -= Time.deltaTime;
+        
 
     }
 
