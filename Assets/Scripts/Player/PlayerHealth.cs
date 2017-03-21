@@ -57,7 +57,7 @@ public class PlayerHealth : MonoBehaviour
         healthSlider.value = currentHealth;
 
         //{0:#.00} to display deciamls
-        healthText.text = string.Format("{0:#} / 100", currentHealth);
+        healthText.text = string.Format("{0:#0} / 100", currentHealth);
 
         //playerAudio.Play ();
 
@@ -65,6 +65,21 @@ public class PlayerHealth : MonoBehaviour
         {
             Death ();
         }
+    }
+
+    public void AddHealth(float amount)
+    {
+        if (currentHealth + amount > 100)
+            currentHealth = 100;
+        else
+            currentHealth += amount;
+
+        healthSlider.value = currentHealth;
+
+        //{0:#.00} to display deciamls
+        healthText.text = string.Format("{0:#0} / 100", currentHealth);
+
+        
     }
 
 
