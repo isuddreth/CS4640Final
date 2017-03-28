@@ -5,7 +5,7 @@ using UnityEngine;
 public class mybow : MonoBehaviour {
 
 	public int theRange = 1000;
-	public LineRenderer theLaser = null;
+	//public LineRenderer theLaser = null;
 	public GameObject arrow = null;
 	
 	private Vector3 thePosition = Vector3.zero;
@@ -16,7 +16,7 @@ public class mybow : MonoBehaviour {
 	
 	void Start () 
 	{
-		theLaser = this.gameObject.GetComponent<LineRenderer> ();
+		//theLaser = this.gameObject.GetComponent<LineRenderer> ();
 	}
 	
 	void FixedUpdate () 
@@ -24,14 +24,14 @@ public class mybow : MonoBehaviour {
 		thePosition = this.transform.position;
 		theDirection = this.transform.TransformDirection(Vector3.forward);
 		
-		theLaser.SetPosition(0,thePosition);
+		/*theLaser.SetPosition(0,thePosition);
 		
 		if(Physics.Raycast (thePosition, theDirection, out hit, theRange))
 		{
 				theLaser.SetPosition(1,hit.point);
 			theEndPoint = thePosition + theDirection * theRange;
 			theLaser.SetPosition (1, theEndPoint);
-		}
+		}*/
 		
 	}
 
