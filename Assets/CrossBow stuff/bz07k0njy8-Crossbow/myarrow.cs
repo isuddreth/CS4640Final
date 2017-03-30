@@ -19,6 +19,7 @@ public class myarrow : MonoBehaviour
 
 	void Update ()
 	{
+        //remove this and use add force on bow
 		this.transform.Translate (Vector3.forward * speed * Time.deltaTime);
 
 		/*if (this.stopTime <= Time.time && this.flying) {
