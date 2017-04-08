@@ -23,6 +23,47 @@ public class QuestManager : MonoBehaviour {
         }
         DontDestroyOnLoad(gameObject);
     }
-    
-    
+
+    //add quests
+
+    //remove quests
+
+    // Checks
+    public bool RequestAvailableQuest(int questID)
+    {
+        for (int i = 0; i < questList.Count; i++)
+        {
+            if (questList[i].id == questID && questList[i].progress == Quest.QuestProgress.AVAILABLE)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool RequestAcceptedQuest(int questID)
+    {
+        for (int i = 0; i < questList.Count; i++)
+        {
+            if (questList[i].id == questID && questList[i].progress == Quest.QuestProgress.ACTIVE)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool RequestCompleteQuest(int questID)
+    {
+        for (int i = 0; i < questList.Count; i++)
+        {
+            if (questList[i].id == questID && questList[i].progress == Quest.QuestProgress.COMPLETE)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
