@@ -7,6 +7,7 @@ public class Detection : MonoBehaviour
 {
     public PlayerHealth health;
     public FoodManager food;
+    public QuestManager quest;
 
 
     public float Reach = 4.0F;
@@ -61,9 +62,21 @@ public class Detection : MonoBehaviour
 
                 if (Input.GetKey(KeyCode.E) && timer <= 0)
                 {
-                    timer = 0.5f;
-                    food.RemoveCastleFood(5f);
+                    timer = 5;
+                    foreach (Quest myQuest in quest.currentQuests)
+                    {
+                        if (myQuest.questObjective == "Throne")
+                        {
+                            myQuest.progress = Quest.QuestProgress.DONE;
+                            quest.setActive(2);
+                        }
+                    }
+
+                    //update quest tracker text
+                    quest.removeDoneQuest();
+                    quest.addActiveQuest();
                 }
+
             }
 
             // if on test health cube
