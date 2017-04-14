@@ -32,6 +32,7 @@ public class Detection : MonoBehaviour
     {
         //Set origin of ray to 'center of screen' and direction of ray to 'cameraview'.
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0F));
+        ray.origin = new Vector3(this.transform.position.x, this.transform.position.y + 2F, this.transform.position.z + 1F);
 
         RaycastHit hit; //Variable reading information about the collider hit.
 
@@ -93,8 +94,22 @@ public class Detection : MonoBehaviour
                 }
             }
 
+            //// if on test health cube
+            //else if (hit.collider.tag == "CastleFoodTest")
+            //{
+            //    healthInReach = false;
+            //    throneInReach = false;
+            //    playerFoodoodInReach = false;
+            //    castleFoodInReach = true;
+
+            //    if (Input.GetKey(KeyCode.E))
+            //    {
+            //        food.AddCastleFood(.5f);
+            //    }
+            //}
+
             // if on test health cube
-            else if (hit.collider.tag == "CastleFoodTest")
+            else if (hit.collider.tag == "KitchenTable")
             {
                 healthInReach = false;
                 throneInReach = false;
