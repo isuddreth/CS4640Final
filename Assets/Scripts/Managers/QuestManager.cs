@@ -7,7 +7,14 @@ using UnityEngine.UI;
 public class QuestManager : MonoBehaviour {
 
     public static QuestManager questManager;
+    public FoodManager myFood;
+    public TPCharController playerController;
+
     public Text questText;
+    public GameObject speechContainer;
+    public Text speakerText;
+    public Text dialogText;
+    public float timer = 0;
 
     public List<Quest> questList = new List<Quest>(); // master list
     public List<Quest> currentQuests = new List<Quest>(); // current quests
@@ -24,10 +31,24 @@ public class QuestManager : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+        clearSpeech();
         DontDestroyOnLoad(gameObject);
 
         //initialize current;
         addActiveQuest();
+    }
+
+    private void Update()
+    {
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+
+            if (timer <= 0)
+            {
+                clearSpeech();
+            }
+        }
     }
 
     private void updateText()
@@ -37,6 +58,40 @@ public class QuestManager : MonoBehaviour {
         {
             questText.text += quest.description + "\n";
         }
+    }
+
+
+    public void endQuest(Quest q)
+    {
+        q.progress = Quest.QuestProgress.DONE;
+
+        // quest reward
+        switch (q.id)
+        {
+            case 1:
+                playerController.walkingSpeed = 8;
+                break;
+            case 2:
+                myFood.playerCapacity = 50;
+                myFood.UpdateFood();
+                break;
+            default:
+                break;
+
+        }
+
+        questText.text = "";
+        speakerText.text = q.dialog[0].speaker;
+        dialogText.text = q.dialog[0].dialog;
+        setActive(q.nextQuest);
+        timer = 15;
+        speechContainer.SetActive(true);
+    }
+
+
+    private void clearSpeech()
+    {
+        speechContainer.SetActive(false);
     }
 
     //add active quests
@@ -52,6 +107,7 @@ public class QuestManager : MonoBehaviour {
         //updateText();
 
         Quest tempQuest = new Quest();
+        currentQuests = new List<Quest>();
 
         for (int i = 0; i < questList.Count; i++)
         {
@@ -100,8 +156,30 @@ public class QuestManager : MonoBehaviour {
             if (quest.id == questID)
             {
                 quest.progress = Quest.QuestProgress.ACTIVE;
+                quest.currentFood = myFood.addCastleCount;
             }
         }
+        updateText();
+    }
+
+    public void AddCastleFood(float f)
+    {
+        myFood.AddCastleFood(f);
+        foreach (Quest quest in currentQuests)
+        {
+            if (quest.questObjective == "Food")
+            {
+                if (myFood.addCastleCount >= quest.currentFood + quest.questObjectiveCount)
+                {
+                    myFood.addCastleCount = 0;
+                    endQuest(quest);
+                }
+            }
+        }
+
+        //update quest tracker text
+        removeDoneQuest();
+        addActiveQuest();
     }
 
     //remove quests

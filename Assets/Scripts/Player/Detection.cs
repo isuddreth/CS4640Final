@@ -68,8 +68,7 @@ public class Detection : MonoBehaviour
                     {
                         if (myQuest.questObjective == "Throne")
                         {
-                            myQuest.progress = Quest.QuestProgress.DONE;
-                            quest.setActive(2);
+                            quest.endQuest(myQuest);
                         }
                     }
 
@@ -118,7 +117,7 @@ public class Detection : MonoBehaviour
 
                 if (Input.GetKey(KeyCode.E))
                 {
-                    food.AddCastleFood(.5f);
+                    quest.AddCastleFood(.5f);
                 }
             }
 

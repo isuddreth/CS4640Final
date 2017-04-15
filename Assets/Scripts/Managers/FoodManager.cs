@@ -17,6 +17,7 @@ public class FoodManager : MonoBehaviour
     public Text castleFoodText;
     public float playerCapacity = 100;
     public float castleCapacity = 50;
+    public float addCastleCount = 0;
 
     //Animator anim;
     //AudioSource playerAudio;
@@ -35,10 +36,7 @@ public class FoodManager : MonoBehaviour
         currentPlayerFood = startingPlayerFood;
         currentCastleFood = startingCastleFood;
 
-        castleFoodText.text = string.Format("{0:#0} / {1}", currentCastleFood, castleCapacity);
-        playerFoodText.text = string.Format("{0:#0} / {1}", currentPlayerFood, playerCapacity);
-        playerFoodSlider.maxValue = playerCapacity;
-        castleFoodSlider.maxValue = castleCapacity;
+        UpdateFood();
 
     }
 
@@ -51,6 +49,14 @@ public class FoodManager : MonoBehaviour
             playerHealth.TakeDamage(.001f);
         }
 
+    }
+
+    public void UpdateFood()
+    {
+        castleFoodText.text = string.Format("{0:#0} / {1}", currentCastleFood, castleCapacity);
+        playerFoodText.text = string.Format("{0:#0} / {1}", currentPlayerFood, playerCapacity);
+        playerFoodSlider.maxValue = playerCapacity;
+        castleFoodSlider.maxValue = castleCapacity;
     }
 
 
@@ -77,7 +83,7 @@ public class FoodManager : MonoBehaviour
 
         AddPlayerFood(-amount);
         currentCastleFood += amount;
-    
+        addCastleCount += amount;
         castleFoodSlider.value = currentCastleFood;
 
         //{0:#.00} to display deciamls
