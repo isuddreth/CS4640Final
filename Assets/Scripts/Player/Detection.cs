@@ -16,6 +16,7 @@ public class Detection : MonoBehaviour
     public bool throneInReach;
     public bool playerFoodoodInReach;
     public bool castleFoodInReach;
+    public bool BerryBushInReach;
     public float timer;
 
     public Color DebugRayColor = Color.green;
@@ -46,6 +47,7 @@ public class Detection : MonoBehaviour
                 throneInReach = false;
                 playerFoodoodInReach = false;
                 castleFoodInReach = false;
+                BerryBushInReach = false;
 
                 if (Input.GetKey(KeyCode.E))
                 {
@@ -53,13 +55,14 @@ public class Detection : MonoBehaviour
                 }
             }
 
-            // if on test health cube
+            // if on throne cube
             else if (hit.collider.tag == "Throne")
             {
                 healthInReach = false;
                 throneInReach = true;
                 playerFoodoodInReach = false;
                 castleFoodInReach = false;
+                BerryBushInReach = false;
 
                 if (Input.GetKey(KeyCode.E) && timer <= 0)
                 {
@@ -79,13 +82,14 @@ public class Detection : MonoBehaviour
 
             }
 
-            // if on test health cube
+            // if on test food cube
             else if (hit.collider.tag == "PlayerFoodTest")
             {
                 healthInReach = false;
                 throneInReach = false;
                 playerFoodoodInReach = true;
                 castleFoodInReach = false;
+                BerryBushInReach = false;
 
                 if (Input.GetKey(KeyCode.E))
                 {
@@ -107,17 +111,34 @@ public class Detection : MonoBehaviour
             //    }
             //}
 
-            // if on test health cube
+            // if on table
             else if (hit.collider.tag == "KitchenTable")
             {
                 healthInReach = false;
                 throneInReach = false;
                 playerFoodoodInReach = false;
                 castleFoodInReach = true;
+                BerryBushInReach = false;
 
                 if (Input.GetKey(KeyCode.E))
                 {
                     quest.AddCastleFood(.5f);
+                }
+            }
+
+
+            // if on test health cube
+            else if (hit.collider.tag == "BerryBushInReach")
+            {
+                healthInReach = false;
+                throneInReach = false;
+                playerFoodoodInReach = false;
+                castleFoodInReach = false;
+                BerryBushInReach = true;
+
+                if (Input.GetKey(KeyCode.E))
+                {
+                    food.AddPlayerFood(.5f);
                 }
             }
 
@@ -127,6 +148,7 @@ public class Detection : MonoBehaviour
                 throneInReach = false;
                 playerFoodoodInReach = false;
                 castleFoodInReach = false;
+                BerryBushInReach = false;
             }
         }
 
@@ -136,6 +158,7 @@ public class Detection : MonoBehaviour
             throneInReach = false;
             playerFoodoodInReach = false;
             castleFoodInReach = false;
+            BerryBushInReach = false;
         }
 
         //Draw the ray as a colored line for debugging purposes.
