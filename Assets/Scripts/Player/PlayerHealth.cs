@@ -11,14 +11,16 @@ public class PlayerHealth : MonoBehaviour
     public Slider healthSlider;
     public Text healthText;
     public Image damageImage;
-    public AudioClip deathClip;
     public float flashSpeed = 5f;
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+    public GameObject gameOver;
+    public Text gameOverTimer;
+    public AudioClip deathClip;
 
 
     Animator anim;
     AudioSource playerAudio;
-    //PlayerMovement playerMovement;
+    TPCharController playerMovement;
     //PlayerShooting playerShooting;
     bool isDead;
     bool damaged;
@@ -28,7 +30,7 @@ public class PlayerHealth : MonoBehaviour
     {
         anim = GetComponent <Animator> ();
         playerAudio = GetComponent <AudioSource> ();
-        //playerMovement = GetComponent <PlayerMovement> ();
+        playerMovement = GetComponent <TPCharController> ();
         //playerShooting = GetComponentInChildren <PlayerShooting> ();
         currentHealth = startingHealth;
     }
@@ -45,6 +47,12 @@ public class PlayerHealth : MonoBehaviour
             damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
         }
         damaged = false;
+
+        //death
+        if (isDead)
+        {
+            
+        }
     }
 
 
@@ -86,13 +94,13 @@ public class PlayerHealth : MonoBehaviour
     void Death ()
     {
         isDead = true;
-
+        gameOver.SetActive(true);
         //playerShooting.DisableEffects ();
 
-        anim.SetTrigger ("Die");
+        //anim.SetTrigger ("Die");
 
-        playerAudio.clip = deathClip;
-        playerAudio.Play ();
+        //playerAudio.clip = deathClip;
+        //playerAudio.Play ();
 
         //playerMovement.enabled = false;
         //playerShooting.enabled = false;
