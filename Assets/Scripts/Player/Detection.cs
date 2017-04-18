@@ -17,6 +17,7 @@ public class Detection : MonoBehaviour
     public bool playerFoodoodInReach;
     public bool castleFoodInReach;
     public bool BerryBushInReach;
+    public bool healthOrbInReach;
     public float timer;
 
     public Color DebugRayColor = Color.green;
@@ -43,11 +44,8 @@ public class Detection : MonoBehaviour
             // if on test health cube
             if (hit.collider.tag == "HealthTest")
             {
+                setFalse();
                 healthInReach = true;
-                throneInReach = false;
-                playerFoodoodInReach = false;
-                castleFoodInReach = false;
-                BerryBushInReach = false;
 
                 if (Input.GetKey(KeyCode.E))
                 {
@@ -58,11 +56,8 @@ public class Detection : MonoBehaviour
             // if on throne cube
             else if (hit.collider.tag == "Throne")
             {
-                healthInReach = false;
+                setFalse();
                 throneInReach = true;
-                playerFoodoodInReach = false;
-                castleFoodInReach = false;
-                BerryBushInReach = false;
 
                 if (Input.GetKey(KeyCode.E) && timer <= 0)
                 {
@@ -85,11 +80,8 @@ public class Detection : MonoBehaviour
             // if on test food cube
             else if (hit.collider.tag == "PlayerFoodTest")
             {
-                healthInReach = false;
-                throneInReach = false;
+                setFalse();
                 playerFoodoodInReach = true;
-                castleFoodInReach = false;
-                BerryBushInReach = false;
 
                 if (Input.GetKey(KeyCode.E))
                 {
@@ -114,11 +106,8 @@ public class Detection : MonoBehaviour
             // if on table
             else if (hit.collider.tag == "KitchenTable")
             {
-                healthInReach = false;
-                throneInReach = false;
-                playerFoodoodInReach = false;
+                setFalse();
                 castleFoodInReach = true;
-                BerryBushInReach = false;
 
                 if (Input.GetKey(KeyCode.E))
                 {
@@ -130,10 +119,7 @@ public class Detection : MonoBehaviour
             // if on test health cube
             else if (hit.collider.tag == "BerryBushInReach")
             {
-                healthInReach = false;
-                throneInReach = false;
-                playerFoodoodInReach = false;
-                castleFoodInReach = false;
+                setFalse();
                 BerryBushInReach = true;
 
                 if (Input.GetKey(KeyCode.E))
@@ -141,24 +127,28 @@ public class Detection : MonoBehaviour
                     food.AddPlayerFood(.5f);
                 }
             }
+            
 
+            // if on test health cube
+            else if (hit.collider.tag == "HealthOrb")
+            {
+                setFalse();
+                healthOrbInReach = true;
+
+                if (Input.GetKey(KeyCode.E))
+                {
+                    health.AddHealth(.5f);
+                }
+            }
             else
             {
-                healthInReach = false;
-                throneInReach = false;
-                playerFoodoodInReach = false;
-                castleFoodInReach = false;
-                BerryBushInReach = false;
+                setFalse();
             }
         }
 
         else
         {
-            healthInReach = false;
-            throneInReach = false;
-            playerFoodoodInReach = false;
-            castleFoodInReach = false;
-            BerryBushInReach = false;
+            setFalse();
         }
 
         //Draw the ray as a colored line for debugging purposes.
@@ -168,6 +158,16 @@ public class Detection : MonoBehaviour
             timer -= Time.deltaTime;
         
 
+    }
+
+    private void setFalse()
+    {
+        healthInReach = false;
+        throneInReach = false;
+        playerFoodoodInReach = false;
+        castleFoodInReach = false;
+        BerryBushInReach = false;
+        healthOrbInReach = false;
     }
 
 }

@@ -48,11 +48,6 @@ public class PlayerHealth : MonoBehaviour
         }
         damaged = false;
 
-        //death
-        if (isDead)
-        {
-            
-        }
     }
 
 

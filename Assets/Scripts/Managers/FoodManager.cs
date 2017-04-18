@@ -43,6 +43,7 @@ public class FoodManager : MonoBehaviour
 
     void Update()
     {
+        AddPlayerFood(-.0025f);
 
         if (currentPlayerFood == 0)
         {
@@ -62,7 +63,7 @@ public class FoodManager : MonoBehaviour
 
     public void AddPlayerFood(float amount)
     {
-        if (currentPlayerFood + amount > playerCapacity)
+        if (currentPlayerFood + amount > playerCapacity || currentPlayerFood + amount < 0)
             return;
 
         currentPlayerFood += amount;
