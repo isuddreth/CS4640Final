@@ -21,7 +21,7 @@ public class FoodDrop : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "Player"){
-            if (food.AddPlayerFood(10f))
+            if (food.AddPlayerFood(5f))
             {
                 Destroy(this.gameObject);
             }
