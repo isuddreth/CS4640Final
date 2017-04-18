@@ -43,7 +43,7 @@ public class FoodManager : MonoBehaviour
 
     void Update()
     {
-        AddPlayerFood(-.0025f);
+        RemovePlayerFood(.0025f);
 
         if (currentPlayerFood <= 0)
         {
@@ -61,12 +61,29 @@ public class FoodManager : MonoBehaviour
     }
 
 
-    public void AddPlayerFood(float amount)
+    public bool AddPlayerFood(float amount)
     {
-        if (currentPlayerFood + amount > playerCapacity || currentPlayerFood < 0)
-            return;
+        if (currentPlayerFood + amount > playerCapacity)
+            return false;
 
         currentPlayerFood += amount;
+
+        playerFoodSlider.value = currentPlayerFood;
+
+        //{0:#.00} to display deciamls
+        playerFoodText.text = string.Format("{0:#0} / {1}", currentPlayerFood, playerCapacity);
+
+        return true;
+        //playerAudio.Play ();
+
+    }
+
+    public void RemovePlayerFood(float amount)
+    {
+        if (currentPlayerFood + amount < 0)
+            return;
+
+        currentPlayerFood -= amount;
 
         playerFoodSlider.value = currentPlayerFood;
 
