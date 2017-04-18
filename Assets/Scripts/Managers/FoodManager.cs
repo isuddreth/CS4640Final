@@ -45,7 +45,7 @@ public class FoodManager : MonoBehaviour
     {
         AddPlayerFood(-.0025f);
 
-        if (currentPlayerFood == 0)
+        if (currentPlayerFood <= 0)
         {
             playerHealth.TakeDamage(.001f);
         }
@@ -63,7 +63,7 @@ public class FoodManager : MonoBehaviour
 
     public void AddPlayerFood(float amount)
     {
-        if (currentPlayerFood + amount > playerCapacity || currentPlayerFood + amount < 0)
+        if (currentPlayerFood + amount > playerCapacity || currentPlayerFood < 0)
             return;
 
         currentPlayerFood += amount;

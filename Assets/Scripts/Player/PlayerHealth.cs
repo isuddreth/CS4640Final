@@ -14,8 +14,11 @@ public class PlayerHealth : MonoBehaviour
     public float flashSpeed = 5f;
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
     public GameObject gameOver;
+    public float deathTimer;
     public Text gameOverTimer;
     public AudioClip deathClip;
+
+    public GameObject respawn;
 
 
     Animator anim;
@@ -48,6 +51,18 @@ public class PlayerHealth : MonoBehaviour
         }
         damaged = false;
 
+        if (isDead)
+        {
+            deathTimer -= Time.deltaTime;
+
+            if (deathTimer <= 0)
+            {
+                isDead = false;
+                gameOver.SetActive(false);
+                AddHealth(10);
+            }
+            gameOverTimer.text = string.Format("{0:#0}", deathTimer);
+        }
     }
 
 
@@ -90,6 +105,9 @@ public class PlayerHealth : MonoBehaviour
     {
         isDead = true;
         gameOver.SetActive(true);
+
+        this.transform.position = respawn.transform.position;
+        deathTimer = 10;
         //playerShooting.DisableEffects ();
 
         //anim.SetTrigger ("Die");
