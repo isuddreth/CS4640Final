@@ -51,6 +51,8 @@ public class physicsBow : MonoBehaviour
             cloneArrow.GetComponent<Rigidbody>().AddForce(this.transform.forward * force,ForceMode.Impulse);
             cloneArrow.transform.rotation = this.transform.rotation;
             isOut = false;
+
+            Destroy(cloneArrow, 20);
         }
     }
 
